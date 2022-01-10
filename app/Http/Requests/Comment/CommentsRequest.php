@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Review;
+namespace App\Http\Requests\Comment;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ReviewRequest extends FormRequest
+class CommentsRequest extends FormRequest
 {
+
     public function authorize()
     {
         return true;
@@ -14,8 +15,7 @@ class ReviewRequest extends FormRequest
     public function rules()
     {
         return [
-            'star' => 'required|integer|between:0,5',
-            'review' => 'required',
+            'comment' => 'required|string'
         ];
     }
 }

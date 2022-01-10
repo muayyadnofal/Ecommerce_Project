@@ -35,10 +35,16 @@ class Product extends Model
         return $this->hasMany(Review::class);
     }
 
-    // product has many discounts
-    public function discounts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    // product has many comments
+    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Discount::class)->orderBy('date');
+        return $this->hasMany(Comment::class);
+    }
+
+    // product has many likes
+    public function likes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Like::class);
     }
 
     // ****************** belongs to ****************** //

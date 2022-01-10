@@ -1,18 +1,16 @@
 <?php
 
-namespace App\Http\Resources\Review;
+namespace App\Http\Resources\Comment;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ReviewResource extends JsonResource
+class CommentsResource extends JsonResource
 {
-
     public function toArray($request)
     {
         return [
             'customer' => $this->customer,
-            'comment' => $this->review,
-            'star' => $this->star,
+            'comment' => $this->comment
         ];
     }
 }

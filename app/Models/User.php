@@ -30,6 +30,17 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany(Product::class, 'user_products');
     }
 
+    // user has many comments
+    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    // user has many likes
+    public function likes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Like::class);
+    }
 
     // override methods __JWT interface
     public function getJWTIdentifier()

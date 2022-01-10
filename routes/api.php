@@ -32,7 +32,7 @@ Route::group(['prefix' => 'auth', 'middleware' => ['auth.guard:admin_api', 'auth
 });
 // *************************************************************************************
 
-// ************************ admin roles for Product ************************** //
+// ************************ admin rules for Product ************************** //
 Route::group(['prefix' => 'admin/product', 'middleware' => ['auth.guard:admin_api', 'protected']], function () {
     //create product
     Route::post('/create/{categoryName}', [ProductsController::class, 'store']);
@@ -50,7 +50,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth.guard:admin_api', 'pro
 
 
 
-// ************************ user roles for Product ************************** //
+// ************************ user rules for Product ************************** //
 Route::group(['prefix' => 'user/product', 'middleware' => ['auth.guard:user_api', 'protected']], function () {
     // get all products
     Route::get('/getAll', [ProductsController::class, 'getAllProducts']);
@@ -67,14 +67,14 @@ Route::group(['prefix' => 'user/product', 'middleware' => ['auth.guard:user_api'
 });
 // *************************************************************************************
 
-// ************************ user roles for Reviews ************************** //
+// ************************ user rules for Reviews ************************** //
 Route::group(['prefix' => 'user/review', 'middleware' => ['auth.guard:user_api', 'protected']], function () {
     // make a review
     Route::post('/create/{id}', [ReviewsController::class, 'store']);
 });
 // *************************************************************************************
 
-// ************************ user roles for cart ************************** //
+// ************************ user rules for cart ************************** //
 Route::group(['prefix' => 'user/cart', 'middleware' => ['auth.guard:user_api', 'protected']], function () {
     // add product to cart
     Route::get('/add', [\App\Http\Controllers\Cart\cartsController::class, 'store']);
@@ -84,5 +84,22 @@ Route::group(['prefix' => 'user/cart', 'middleware' => ['auth.guard:user_api', '
     Route::get('/getAll', [\App\Http\Controllers\Cart\cartsController::class, 'getProducts']);
     // delete product from cart
     Route::delete('/delete', [\App\Http\Controllers\Cart\cartsController::class, 'delete']);
+});
+// *************************************************************************************
+
+// ************************ user rules for comment ************************** //
+Route::group(['prefix' => 'user/comment', 'middleware' => ['auth.guard:user_api', 'protected']], function () {
+    // add comment to product
+    Route::post('/{id}/add', [\App\Http\Controllers\Comment\CommentsController::class, 'store']);
+    // edit comment
+    Route::post('/{product_id}/edit/{comment_id}', [\App\Http\Controllers\Comment\CommentsController::class, 'update']);
+    // delete comment
+    Route::delete('/{product_id}/delete/{comment_id}', [\App\Http\Controllers\Comment\CommentsController::class, 'delete']);
+});
+// *************************************************************************************
+
+// ************************ user rules for comment ************************** //
+Route::group(['prefix' => 'user/likes', 'middleware' => ['auth.guard:user_api', 'protected']], function () {
+    Route::post('/{product_id}/like', [\App\Http\Controllers\Like\LikesController::class, 'store']);
 });
 // *************************************************************************************
