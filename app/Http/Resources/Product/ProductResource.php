@@ -54,7 +54,6 @@ class ProductResource extends JsonResource
     // get liked by users names
     public function getUsersNames($id) {
         $names = [];
-        $v = [];
         $users = DB::table('likes')->where('product_id', 'like', $id)->get('user_id');
         foreach($users as $user) {
             $names[] = DB::table('users')->where('id', 'like', $user->user_id)->pluck('name');
@@ -100,9 +99,14 @@ class ProductResource extends JsonResource
             'rating' => $this->reviews->count() > 0 ?
                 round($this->reviews->sum('star') / $this->reviews->count()) : 0,
             'discounts' => [
-                'first discount' => "the price for product {$this->name} will be discounted by {$this->discount_1} percent in {$this->date_1}",
-                'second discount' => "the price for product {$this->name} will be discounted by {$this->discount_2} percent in {$this->date_2}",
-                'third discount' => "the price for product {$this->name} will be discounted by {$this->discount_3} percent in {$this->date_3}",
+                'first discount' => $this->discount_1,
+                'second discount' => $this->discount_2,
+                'third discount' => $this->discount_3,
+            ],
+            'discounts_dates' => [
+                'first date' => $this->date_1,
+                'second date' => $this->date_2,
+                'third date' => $this->date_3,
             ],
             'seller contact info' => [
                 'phone number' => $this->getContactInfo($this->admin_id)[0],
